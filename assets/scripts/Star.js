@@ -13,7 +13,7 @@ cc.Class({
 
   properties: {
     // 星星和主角之间的距离小于这个数值时，就会完成收集
-    pickRadius: 0
+    pickRadius: 4
   },
   getPlayerDistance() {
     // 根据player节点位置判断距离
@@ -25,6 +25,8 @@ cc.Class({
   onPicked() {
     // 当星星被收集时，调用Game脚本中的接口，生成一个新的星星
     this.game.spawnNewStar()
+    // 调用Game脚本中得得分方法
+    this.game.gainScore()
     // 然后销毁当前星星节点
     this.node.destroy()
   },
@@ -34,5 +36,9 @@ cc.Class({
       // 调用收集行为
       this.onPicked()
     }
+    // 根据 Game 脚本中得计时器更新星星的透明度
+    let opacityRatio = 1 - this.game.timer / this.game.starDuration
+    const minOpacity = 50
+    this.node.opacity = minOpacity + Math.floor(opacityRatio * (255 - minOpacity))
   }
 });

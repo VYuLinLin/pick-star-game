@@ -31,7 +31,6 @@ cc.Class({
   },
 
   onKeyDown(event) {
-    console.log(cc.macro.KEY)
     switch (event.keyCode) {
       case cc.macro.KEY.a:
       case cc.macro.KEY.left:
