@@ -12,6 +12,11 @@ cc.Class({
   extends: cc.Component,
 
   properties: {
+    // 引用预制资源开始按钮
+    btnPrefab: {
+      default: null,
+      type: cc.Prefab
+    },
     // 引用预制资源星星
     starPrefab: {
       default: null,
@@ -34,12 +39,17 @@ cc.Class({
     scoreDisplay: {
       default: null,
       type: cc.Label
+    },
+    // 得分音效资源
+    scoreAudio: {
+      default: null,
+      type: cc.AudioClip
     }
   },
 
   // LIFE-CYCLE CALLBACKS:
 
-  onLoad () {
+  onLoad() {
     // 获取地平面的 y 轴坐标
     this.groundY = this.ground.y + this.ground.height / 2
     // 初始化计时器
@@ -47,6 +57,8 @@ cc.Class({
     this.starDuration = 0
     // 生成一个新的星星
     this.spawnNewStar()
+    // 显示开始按钮
+    // this.showBtnPlay()
     // 初始化积分
     this.score = 0
   },
@@ -57,6 +69,14 @@ cc.Class({
     } else {
       this.timer += dt
     }
+  },
+  showBtnPlay() {
+    // 使用给定的模板在场景中生成一个新节点
+    let btnPlay = cc.instantiate(this.btnPrefab)
+    // 讲新增的节点添加到Canvas节点下面
+    this.node.addChild(btnPlay)
+    // 在开始按钮组件上暂存Game对象的引用
+    btnPlay.getComponent('BtnPlay').game = this
   },
   spawnNewStar() {
     // 使用给定的模板在场景中生成一个新节点
@@ -82,6 +102,8 @@ cc.Class({
   gainScore() {
     // 更新scoreDisplay Label 的文字
     this.scoreDisplay.string = `Score: ${++this.score}`
+    // 调用声音引擎播放得分音效
+    cc.audioEngine.playEffect(this.scoreAudio, false)
   },
   gameOver() {
     this.player.stopAllActions() // 停止 player 节点的跳跃动作

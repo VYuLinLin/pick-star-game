@@ -18,16 +18,28 @@ cc.Class({
     accel: 0, // 加速度
     accLeft: false, // 是否左边加速
     accRight: false, // 是否右边加速
-    xSpeed: 0 // 横向加速度值
+    xSpeed: 0, // 横向加速度值
+    // 跳跃音效资源
+    jumpAudio: {
+      default: null,
+      type: cc.AudioClip
+    }
   },
 
   setJumpAction() {
     // 跳跃上升
-    let jumpUp = cc.moveBy(this.jumpDuration, cc.v2(0, this.jumpHeight)).easing(cc.easeCubicActionOut())
+    const jumpUp = cc.moveBy(this.jumpDuration, cc.v2(0, this.jumpHeight)).easing(cc.easeCubicActionOut())
     // 下落
-    let jumpDown = cc.moveBy(this.jumpDuration, cc.v2(0, -this.jumpHeight)).easing(cc.easeCubicActionOut())
-    // 不断重复
-    return cc.repeatForever(cc.sequence(jumpUp, jumpDown))
+    const jumpDown = cc.moveBy(this.jumpDuration, cc.v2(0, -this.jumpHeight)).easing(cc.easeCubicActionOut())
+    // 添加回调函数，用于在动作结束时调用我们定义的其他方法
+    const callback = cc.callFunc(this.playJumpSound, this)
+    // 不断重复,而且每次完成落地动作后调用回调来播放声音
+    return cc.repeatForever(cc.sequence(jumpUp, jumpDown, callback))
+  },
+
+  playJumpSound() {
+    // 调用声音引擎播放声音
+    cc.audioEngine.playEffect(this.jumpAudio, false)
   },
 
   onKeyDown(event) {
