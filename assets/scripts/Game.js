@@ -43,7 +43,7 @@ cc.Class({
     // 得分音效资源
     scoreAudio: {
       default: null,
-      type: cc.AudioClip
+      url: cc.AudioClip
     }
   },
 

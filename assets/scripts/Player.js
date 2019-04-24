@@ -22,7 +22,7 @@ cc.Class({
     // 跳跃音效资源
     jumpAudio: {
       default: null,
-      type: cc.AudioClip
+      url: cc.AudioClip
     }
   },
 
@@ -42,30 +42,25 @@ cc.Class({
     cc.audioEngine.playEffect(this.jumpAudio, false)
   },
 
-  onKeyDown(event) {
-    switch (event.keyCode) {
-      case cc.macro.KEY.a:
-      case cc.macro.KEY.left:
-        this.accLeft = true
+  onKeyboard(event, b = true) {
+    const code = event.keyCode
+    switch (code) {
+      case cc.KEY.a:
+      case cc.KEY.left:
+        this.accLeft = b
         break
-      case cc.macro.KEY.d:
-      case cc.macro.KEY.right:
-        this.accRight = true
+      case cc.KEY.d:
+      case cc.KEY.right:
+      // 2.x.x版本写法
+      // case cc.macro.KEY.d:
+      // case cc.macro.KEY.right:
+        this.accRight = b
         break
     }
   },
 
-  onKeyUp(event) {
-    switch(event.keyCode) {
-      case cc.macro.KEY.a:
-      case cc.macro.KEY.left:
-        this.accLeft = false
-        break
-        case cc.macro.KEY.d:
-        case cc.macro.KEY.right:
-        this.accRight = false
-        break
-    }
+  onKeyUp(e) {
+    this.onKeyboard(e, false)
   },
   // LIFE-CYCLE CALLBACKS: 生命周期回调函数
   onLoad () {
@@ -76,13 +71,13 @@ cc.Class({
     this.accRight = false
 
     // 初始化键盘输入监听
-    cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this)
+    cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyboard, this)
     cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this)
   },
 
   onDestroy() {
     // 取消键盘输入监听
-    cc.systemEvent.off(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this)
+    cc.systemEvent.off(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyboard, this)
     cc.systemEvent.off(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this)
   },
 
