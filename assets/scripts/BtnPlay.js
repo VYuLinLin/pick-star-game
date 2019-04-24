@@ -10,23 +10,16 @@
 
 cc.Class({
   extends: cc.Component,
-
-  properties: {
-    showBtn: true
-  },
-
-  // LIFE-CYCLE CALLBACKS:
-
   onLoad () {
-    cc.systemEvent.on(cc.Event.MOUSE, this.start, this)
+    this.node.on(cc.Node.EventType.MOUSE_UP, this.startGeme, this);
+    this.node.on(cc.Node.EventType.TOUCH_END, this.startGeme, this);
   },
   onDestroy() {
-    cc.systemEvent.off(cc.Event.MOUSE, this.start, this)
+    this.node.off(cc.Node.EventType.MOUSE_UP, this.startGeme, this)
+    this.node.off(cc.Node.EventType.TOUCH_END, this.startGeme, this)
   },
-  start() {
-    // this.game.player.initJump()
-    // console.log(this.game)
-  },
-
-  // update (dt) {},
+  startGeme(e) {
+    this.game.startGeme()
+    this.node.destroy()
+  }
 });

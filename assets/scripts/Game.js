@@ -48,8 +48,7 @@ cc.Class({
   },
 
   // LIFE-CYCLE CALLBACKS:
-
-  onLoad() {
+  startGeme() {
     // 获取地平面的 y 轴坐标
     this.groundY = this.ground.y + this.ground.height / 2
     // 初始化计时器
@@ -57,8 +56,12 @@ cc.Class({
     this.starDuration = 0
     // 生成一个新的星星
     this.spawnNewStar()
+    // 开始跳动
+    this.player.getComponent('Player').startGame()
+  },
+  onLoad() {
     // 显示开始按钮
-    // this.showBtnPlay()
+    this.showBtnPlay()
     // 初始化积分
     this.score = 0
   },

@@ -44,24 +44,12 @@ cc.Class({
 
   onKeyboard(event, b = true) {
     const code = event.keyCode
-    switch (code) {
-      case cc.KEY.a:
-      case cc.KEY.left:
-        this.accLeft = b
-        break
-      case cc.KEY.d:
-      case cc.KEY.right:
-        this.accRight = b
-        break
-      // 2.x.x版本写法
-      case cc.macro.KEY.a:
-      case cc.macro.KEY.left:
-        this.accLeft = b
-        break
-      case cc.macro.KEY.d:
-      case cc.macro.KEY.right:
-        this.accRight = b
-        break
+    const left = [cc.KEY.a, cc.KEY.left, cc.macro.KEY && cc.macro.KEY.a, cc.macro.KEY && cc.macro.KEY.left]
+    const right = [cc.KEY.d, cc.KEY.right, cc.macro.KEY && cc.macro.KEY.d, cc.macro.KEY && cc.macro.KEY.right]
+    left.filter(a => a).includes(code) && (this.accLeft = b)
+    right.filter(a => a).includes(code) && (this.accRight = b)
+    if (b) {
+      console.log(this.getComponent('Star'))
     }
   },
 
@@ -69,13 +57,12 @@ cc.Class({
     this.onKeyboard(e, false)
   },
   // LIFE-CYCLE CALLBACKS: 生命周期回调函数
-  onLoad () {
+  startGame() {
     // 初始化跳跃动作
     this.node.runAction(this.setJumpAction())
     // 加速度方向开关
     this.accLeft = false
     this.accRight = false
-
     // 初始化键盘输入监听
     cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyboard, this)
     cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this)
