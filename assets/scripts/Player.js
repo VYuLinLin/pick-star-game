@@ -51,9 +51,15 @@ cc.Class({
         break
       case cc.KEY.d:
       case cc.KEY.right:
+        this.accRight = b
+        break
       // 2.x.x版本写法
-      // case cc.macro.KEY.d:
-      // case cc.macro.KEY.right:
+      case cc.macro.KEY.a:
+      case cc.macro.KEY.left:
+        this.accLeft = b
+        break
+      case cc.macro.KEY.d:
+      case cc.macro.KEY.right:
         this.accRight = b
         break
     }
