@@ -1,6 +1,7 @@
 # pick-star-game
 一个摘星星的小游戏，基于Cocos Creator 1.9.3版本, 2.x.x版本部分功能不兼容。
-目前只支持PC端，项目[预览地址](https://vyulinlin.github.io/pick-star-game/build/web-mobile/index.html)
+web-mobile项目[预览地址](https://vyulinlin.github.io/pick-star-game/build/web-mobile/index.html)
+web-desktop[预览地址](https://vyulinlin.github.io/pick-star-game/build/web-desktop/index.html)
 
 # Cocos Creator note 2.0
 ##### 1. Cocos Creator 是游戏引擎吗？
