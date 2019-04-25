@@ -1,5 +1,5 @@
 # pick-star-game
-一个摘星星的小游戏，基于Cocos Creator 2.0.9版本, 兼容1.9.3版本。
+一个摘星星的小游戏，基于Cocos Creator 1.9.3版本, 2.x.x版本部分功能不兼容。
 目前只支持PC端，项目[预览地址](https://vyulinlin.github.io/pick-star-game/build/web-mobile/index.html)
 
 # Cocos Creator note 2.0
@@ -75,14 +75,74 @@ Cocos Creator 目前支持发布游戏到 Web、iOS、Android、各类"小游戏
     此种方式在引擎内是以一个buffer的形式缓存的，优点是兼容性好，问题比较少。缺点是占用的内存资源过多。
 - DOM Audio方式加载
     通过生成一个标准的audio元素播放资源，在某些浏览器上可能遇到一些限制，比如只允许播放一个声音资源。
+##### 9. 父子组件的调用
+- 父调子：childName就是子节点的引用
+    this.childName.getComponent('childName')
+- 子调父：
+    - 第一步：在子组件作用域暂存父组件的引用(this.childVariate为子组件的引用)
+    this.childVariate.getComponent('childName').parentVariate = this
+    - 第二步：在子组件里面通过引用变量直接使用
+    this.parentVariate.methodName()
+##### 10. 父子节点的调用
+- 父调子：两种方式
+    - this.node.children // 返回数组，包含所有子节点，没有返回空数组
+    - this.node.getChildByName('子节点名字') // 返回对象，包含特定子节点，没有返回null
+- 子调父：
+    - this.node.parent // 返回对象，如果是根节点调用，则返回场景对象
+##### 11. 根据路径查找结点
+第一个参数为查询的路径，第二个参数为开始查找的根节点，如果没有第二个参数，则从跟节点开始查找。
+示例：
+- cc.find('Canvas') // 返回根节点
+- cc.find('Player', this.node) // 返回当前节点下的Player节点
+- cc.find('Canvas/Player') // 返回根节点下的Player节点
+##### 12. 设置当前节点为随机颜色
+```js
+this.node.color = new cc.Color(
+    Math.floor(Math.random() * 256),
+    Math.floor(Math.random() * 256),
+    Math.floor(Math.random() * 256),
+    Math.random()
+)
+```
+##### 13. Cocos Creator生命周期回调函数
+- onLoad - 回调会在组件首次激活时触发，onLoad 总是会在任何 start 方法调用前执行
+- start - 会在组件第一次激活前，也就是第一次执行 update 之前触发
+- update - 在所有动画更新前执行，此回调可以在每一帧渲染前更新物体的行为，状态和方位。
+- lateUpdate - 在所有组件的 update 都执行完之后才执行
+- onDestroy - 当组件的 enabled 属性从 false 变为 true 时，或者所在节点的 active 属性从 false 变为 true 时，会激活 onEnable 回调。倘若节点第一次被创建且 enabled 为 true，则会在 onLoad 之后，start 之前被调用。
+- onEnable - 当组件的 enabled 属性从 true 变为 false 时，或者所在节点的 active 属性从 true 变为 false 时，会激活 onDisable 回调。
+- onDisable - 当组件或者所在节点调用了 destroy()，则会调用 onDestroy 回调，并在当帧结束时统一回收组件。
 
-##### 9. 开发注意事项
+##### 14. 节点操作
+创建新节点
+```js
+new cc.Node('Sprite').addComponent(cc.Sprite)
+```
+克隆已有节点节点
+```js
+this.target = 已有节点的引用
+cc.instantiate(this.target)
+```
+创建预制节点（与克隆节点类似）
+```js
+this.targetPrefab = 预制节点
+cc.instantiate(this.targetPrefab)
+```
+销毁节点
+```js
+this.target = 引用节点
+this.target.destroy()
+this.node.destroy() // 销毁当前节点
+```
+
+##### 开发注意事项
 - Cocos Creator 中脚本名称就是组件的名称，这个命名是大小写敏感的！如果组件名称的大小写不正确，将无法正确通过名称使用组件！
 - 一个节点上只能添加一个渲染组件，渲染组件包括 Sprite（精灵）， Label（文字），Particle（粒子）等
 - Cocos Creator 的坐标系和 cocos2d-x 引擎坐标系完全一致，而 cocos2d-x 和 OpenGL 坐标系相同，都是起源于笛卡尔坐标系。
 - 笛卡尔坐标系中定义右手系原点在左下角，x 向右，y 向上，z 向外，我们使用的坐标系就是笛卡尔右手系。
-
-##### 10. 敏捷开发
+- 引擎同时只会运行一个场景，当切换场景时，默认会将场景内所有节点和其他实例销毁。
+- 所有需要通过脚本动态加载的资源，都必须放置在 resources 文件夹或它的子文件夹下。
+##### 敏捷开发
 - 层级管理器 里选中一个节点，然后按 Cmd/Ctrl + F 就可以在 场景编辑器 里聚焦这个节点。
 - 选中一个节点后按 Cmd/Ctrl + D 会在该节点相同位置复制一个同样的节点，当我们需要快速制作多个类似节点时可以用这个命令提高效率。
 - 在 场景编辑器 里要选中多个节点，可以按住 Cmd/Ctrl 键依次点击你想要选中的节点，在 层级管理器 里也是一样的操作方式。

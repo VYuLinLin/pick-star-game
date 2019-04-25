@@ -432,7 +432,7 @@
     },
     "_enabled": true,
     "_useOriginalSize": false,
-    "_actualFontSize": 40,
+    "_actualFontSize": 50,
     "_fontSize": 50,
     "_lineHeight": 40,
     "_enableWrapText": true,

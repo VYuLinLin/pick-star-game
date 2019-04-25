@@ -104,7 +104,16 @@ cc.Class({
   },
   gainScore() {
     // 更新scoreDisplay Label 的文字
-    this.scoreDisplay.string = `Score: ${++this.score}`
+    let node = this.scoreDisplay
+    node.string = `Score: ${++this.score}`
+    // 创建一个移动动作
+    // var action = cc.moveTo(2, 100, 100);
+    // 执行动作
+    // node.runAction(action);
+    // 停止一个动作
+    // node.stopAction(action);
+    // 停止所有动作
+    // node.stopAllActions();
     // 调用声音引擎播放得分音效
     cc.audioEngine.playEffect(this.scoreAudio, false)
   },

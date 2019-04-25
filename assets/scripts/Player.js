@@ -48,9 +48,6 @@ cc.Class({
     const right = [cc.KEY.d, cc.KEY.right, cc.macro.KEY && cc.macro.KEY.d, cc.macro.KEY && cc.macro.KEY.right]
     left.filter(a => a).includes(code) && (this.accLeft = b)
     right.filter(a => a).includes(code) && (this.accRight = b)
-    if (b) {
-      console.log(this.getComponent('Star'))
-    }
   },
 
   onKeyUp(e) {

@@ -11,14 +11,18 @@
 cc.Class({
   extends: cc.Component,
   onLoad () {
-    this.node.on(cc.Node.EventType.MOUSE_UP, this.startGeme, this);
-    this.node.on(cc.Node.EventType.TOUCH_END, this.startGeme, this);
+    cc.sys.isMobile
+      ? this.node.on(cc.Node.EventType.TOUCH_END, this.startGeme, this)
+      : this.node.on(cc.Node.EventType.MOUSE_UP, this.startGeme, this)
+    ;
   },
   onDestroy() {
-    this.node.off(cc.Node.EventType.MOUSE_UP, this.startGeme, this)
-    this.node.off(cc.Node.EventType.TOUCH_END, this.startGeme, this)
+    cc.sys.isMobile
+      ? this.node.off(cc.Node.EventType.TOUCH_END, this.startGeme, this)
+      : this.node.off(cc.Node.EventType.MOUSE_UP, this.startGeme, this)
   },
   startGeme(e) {
+    this._startStatus = true
     this.game.startGeme()
     this.node.destroy()
   }
