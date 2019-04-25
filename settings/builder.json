@@ -1,12 +1,17 @@
 {
+  "appKey": "",
+  "appSecret": "",
   "encryptJs": true,
   "excludeScenes": [],
   "fb-instant-games": {},
+  "includeAnySDK": false,
   "includeSDKBox": false,
   "inlineSpriteFrames": true,
   "inlineSpriteFrames_native": true,
+  "jailbreakPlatform": false,
   "md5Cache": false,
   "mergeStartScene": true,
+  "oauthLoginServer": "",
   "optimizeHotUpdate": false,
   "orientation": {
     "landscapeLeft": true,
@@ -15,11 +20,13 @@
     "upsideDown": false
   },
   "packageName": "org.cocos2d.start_project",
+  "privateKey": "",
   "qqplay": {
     "REMOTE_SERVER_ROOT": "",
     "orientation": "portrait",
     "zip": false
   },
+  "renderMode": "1",
   "startScene": "81b327fd-cbb4-4196-baa8-b3cafef0824b",
   "title": "start_project",
   "webOrientation": "auto",
@@ -30,12 +37,5 @@
     "subContext": ""
   },
   "xxteaKey": "8dce80c7-5347-47",
-  "zipCompressJs": true,
-  "includeAnySDK": false,
-  "oauthLoginServer": "",
-  "appKey": "",
-  "appSecret": "",
-  "privateKey": "",
-  "jailbreakPlatform": false,
-  "renderMode": "0"
+  "zipCompressJs": true
 }
