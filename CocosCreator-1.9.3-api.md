@@ -1,7 +1,10 @@
 # Cocos Creactor 1.9.3 常用api
-cc.sys
-cc.game
-cc.NodePool 节点对象池的构造函数
+#### Cocos引擎的主要类、函数、属性或常量
+cc.sys 系统变量（System variables）
+cc.game 是 Game 的实例，用来驱动整个游戏。
+cc.director 一个管理你的游戏的逻辑流程的单例对象。
+cc.p    通过该简便的函数进行创建 cc.Vec2 对象。
+cc.NodePool 节点对象池的构造函数，用于管理节点对象的对象缓存池。新的 NodePool 需要实例化之后才能使用，每种不同的节点对象池需要一个不同的对象池实例，这里的种类对应于游戏中的节点设计，一个 prefab 相当于一个种类的节点。
 #### 加载或切换场景
 ```js
 cc.director.loadScene('SceneName', callback) // 加载或切换场景
